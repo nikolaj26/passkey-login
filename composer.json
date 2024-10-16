@@ -1,0 +1,19 @@
+{
+    "name": "codeartnj/passkey-login",
+    "description": "Passkey login for filament",
+    "require": {
+        "web-auth/webauthn-lib": "^5.0",
+        "filament/filament": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codeartnj\\PasskeyLogin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nikola Jovanov",
+            "email": "nikolaj@codeart.mk"
+        }
+    ]
+}
