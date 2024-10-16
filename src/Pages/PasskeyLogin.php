@@ -2,7 +2,7 @@
 
 namespace Codeartnj\PasskeyLogin\Pages;
 
-use App\Models\Passkey;
+use Codeartnj\PasskeyLogin\Models\Passkey;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
@@ -27,7 +27,7 @@ use Webauthn\PublicKeyCredentialSource;
 
 class PasskeyLogin extends BaseAuth
 {
-    protected static string $view = 'filament.auth.login';
+    protected static string $view = 'passkey-login::pages.auth.login';
 
     public function form(Form $form): Form
     {

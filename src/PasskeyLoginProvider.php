@@ -22,6 +22,7 @@ class PasskeyLoginProvider extends PackageServiceProvider
     {
         $package
             ->name('passkey-login')
+            ->hasConfigFile()
             ->hasViews();
     }
 }

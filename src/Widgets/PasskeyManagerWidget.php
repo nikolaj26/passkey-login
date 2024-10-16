@@ -2,7 +2,7 @@
 
 namespace Codeartnj\PasskeyLogin\Widgets;
 
-use App\Models\Passkey;
+use Codeartnj\PasskeyLogin\Models\Passkey;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -33,7 +33,7 @@ class PasskeyManagerWidget extends Widget implements HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
-    protected static string $view = 'filament.employee.widgets.passkey-manager-widget';
+    protected static string $view = 'passkey-login::widgets.passkey-manager-widget';
 
     public array $passkeyData;
 
