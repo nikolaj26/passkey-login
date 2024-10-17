@@ -7,7 +7,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Codeartnj\\PasskeyLoginProvider\\": "src/"
+            "Codeartnj\\PasskeyLogin\\": "src/"
         }
     },
     "authors": [
