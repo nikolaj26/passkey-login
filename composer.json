@@ -19,7 +19,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Codeartnj\\Passkeylogin\\PasskeyLoginProvider"
+                "Passkeylogin\\PasskeyLoginProvider"
             ]
         }
     }
