@@ -145,8 +145,8 @@ class PasskeyLogin extends BaseAuth
             ->all();
 
         $options = new PublicKeyCredentialRequestOptions(
-            challenge: config('passkey_login.authenticate_options.challenge'),
-            rpId: config('passkey_login.authenticate_options.rp_id'),
+            challenge: config('passkey-login.authenticate_options.challenge'),
+            rpId: config('passkey-login.authenticate_options.rp_id'),
             allowCredentials: $allowedCredentials
         );
 

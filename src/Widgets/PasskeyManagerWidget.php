@@ -133,18 +133,18 @@ class PasskeyManagerWidget extends Widget implements HasForms, HasTable
 
         $options = new PublicKeyCredentialCreationOptions(
             rp: new PublicKeyCredentialRpEntity(
-                name: config('passkey_login.register_options.rp.name'),
-                id: config('passkey_login.register_options.rp.id')
+                name: config('passkey-login.register_options.rp.name'),
+                id: config('passkey-login.register_options.rp.id')
             ),
             user: new PublicKeyCredentialUserEntity(
-                name: auth()->user()->{config('passkey_login.register_options.user.name')},
-                id: auth()->user()->{config('passkey_login.register_options.user.id')},
-                displayName: auth()->user()->{config('passkey_login.register_options.user.displayName')},
+                name: auth()->user()->{config('passkey-login.register_options.user.name')},
+                id: auth()->user()->{config('passkey-login.register_options.user.id')},
+                displayName: auth()->user()->{config('passkey-login.register_options.user.displayName')},
             ),
-            challenge: config('passkey_login.register_options.challenge'),
+            challenge: config('passkey-login.register_options.challenge'),
             authenticatorSelection: new AuthenticatorSelectionCriteria(
-                authenticatorAttachment: config('passkey_login.register_options.authenticator_selection.authenticator_attachment'),
-                residentKey: config('passkey_login.register_options.authenticator_selection.resident_key')
+                authenticatorAttachment: config('passkey-login.register_options.authenticator_selection.authenticator_attachment'),
+                residentKey: config('passkey-login.register_options.authenticator_selection.resident_key')
             )
         );
 
