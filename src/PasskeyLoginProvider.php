@@ -6,7 +6,7 @@ namespace Codeartnj\PasskeyLogin;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class PasskeyLogin extends PackageServiceProvider
+class PasskeyLoginProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
