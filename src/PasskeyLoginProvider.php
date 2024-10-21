@@ -19,6 +19,10 @@ class PasskeyLoginProvider extends PackageServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
+        $this->publishes([
+            __DIR__.'/../config/passkey-login.php' => config_path('passkey-login.php')
+        ], 'passkey-login-config');
+
         return parent::boot();
     }
 
