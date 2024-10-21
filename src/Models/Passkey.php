@@ -15,6 +15,7 @@ class Passkey extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'credential_id',
         'data'
