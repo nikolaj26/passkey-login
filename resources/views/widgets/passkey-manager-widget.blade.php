@@ -4,13 +4,13 @@
         <form x-data="registerPasskey"
               wire:submit="registerOptions"
               name="createPasskey"
-              class="space-x-4 flex items-end mb-6">
+              class="flex items-end mb-6">
 
-            <div class="w-full" x-show="showPasskeyForm">
+            <div class="w-full mr-4" x-show="showPasskeyForm">
                 {{ $this->passkeyForm }}
             </div>
 
-            <div class="flex-0" x-show="showPasskeyForm">
+            <div class="shrink-0" x-show="showPasskeyForm">
                 <x-filament::button class="text-nowrap" type="submit">
                     Add Passkey
                 </x-filament::button>
@@ -26,11 +26,12 @@
     </x-filament::section>
 
     <x-filament::modal id="passkey-error" width="md">
-        <div class="flex space-x-4">
+        <div class="flex">
             <x-filament::icon-button
                 size="lg"
                 icon="heroicon-m-exclamation-triangle"
                 color="danger"
+                class="mr-4"
             />
             <p>
                 There was an error creating your passkey
@@ -40,7 +41,7 @@
 
     <x-filament::modal id="creating-passkey" width="md">
         <div class="flex space-x-4">
-            <x-filament::loading-indicator class="h-5 w-5"/>
+            <x-filament::loading-indicator class="h-5 w-5 mr-4"/>
             <p>
                 We are creating your passkey
             </p>

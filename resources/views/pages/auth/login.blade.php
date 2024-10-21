@@ -4,6 +4,7 @@
     {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_BEFORE, scopes: $this->getRenderHookScopes()) }}
 
     <form id="login-form"
+          x-load-js="[@js(\Filament\Support\Facades\FilamentAsset::getScriptSrc('passkey-login', package: 'codeartnj/passkey-login'))]"
           x-data="authenticatePasskey"
           wire:submit="authenticate"
           class="fi-form grid gap-y-6">
@@ -14,7 +15,7 @@
             Log In
         </x-filament::button>
 
-        <div x-show="showPasskeyField" x-cloak class="flex flex-col items-center space-y-5">
+        <div x-show="showPasskeyField" x-cloak class="flex flex-col items-center">
             <div class="w-full flex items-center mb-6">
                 <div class="line"></div>
                 <div class="px-3">OR</div>

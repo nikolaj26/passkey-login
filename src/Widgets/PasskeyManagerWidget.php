@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use Filament\Widgets\Widget;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rules\Unique;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\On;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
@@ -51,7 +52,6 @@ class PasskeyManagerWidget extends Widget implements HasForms, HasTable
             ->schema([
                 TextInput::make('name')
                     ->required()
-                    ->extraAlpineAttributes(['x-model' => 'name'])
             ]);
     }
 
@@ -86,7 +86,8 @@ class PasskeyManagerWidget extends Widget implements HasForms, HasTable
                 ])->errorBag('createPasskey');
             }
 
-            auth()->user()->passkeys()->create([
+            Passkey::create([
+                'user_id' => auth()->user()->id,
                 'name' => $this->passkeyData['name'],
                 'credential_id' => base64_encode($publicKeyCredentialSource->publicKeyCredentialId),
                 'data' => $publicKeyCredentialSource
@@ -129,6 +130,28 @@ class PasskeyManagerWidget extends Widget implements HasForms, HasTable
 
     public function registerOptions()
     {
+        $this->passkeyForm->getState();
+
+        if (!isset($this->passkeyForm->getState()['name'])) {
+            Notification::make()
+                ->danger()
+                ->title('Passkey field is required')
+                ->send();
+
+            $this->passkeyData['name'] = '';
+
+            return;
+        }
+
+        if (Passkey::where('user_id', auth()->user()->id)->where('name', $this->passkeyForm->getState()['name'])->exists()) {
+            Notification::make()
+                ->danger()
+                ->title('Passkey with this name already exists')
+                ->send();
+
+            return;
+        }
+
         $this->dispatch('open-modal', id: 'creating-passkey');
 
         $options = new PublicKeyCredentialCreationOptions(
