@@ -28,26 +28,13 @@ use Webauthn\PublicKeyCredentialSource;
 class PasskeyLogin extends BaseAuth
 {
     protected static string $view = 'passkey-login::pages.auth.login';
+    public int $step = 1;
+    public string $email;
 
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
-                TextInput::make('email')
-                    ->label(__('filament-panels::pages/auth/login.form.email.label'))
-                    ->email()
-                    ->required()
-                    ->autocomplete()
-                    ->autofocus(),
-
-                TextInput::make('password')
-                    ->label(__('filament-panels::pages/auth/login.form.password.label'))
-                    ->hint(filament()->hasPasswordReset() ? new HtmlString(Blade::render('<x-filament::link :href="filament()->getRequestPasswordResetUrl()"> {{ __(\'filament-panels::pages/auth/login.actions.request_password_reset.label\') }}</x-filament::link>')) : null)
-                    ->password()
-                    ->revealable(filament()->arePasswordsRevealable())
-                    ->autocomplete('current-password')
-                    ->required(),
-            ])
+            ->schema(config('passkey-login.multi_step') ? $this->getMultiStepForm() : $this->getSingleStepForm())
             ->statePath('data');
     }
 
@@ -62,6 +49,10 @@ class PasskeyLogin extends BaseAuth
         }
 
         $data = $this->form->getState();
+
+        if (config('passkey-login.multi_step')) {
+            $data['email'] = $this->email;
+        }
 
         if (!Filament::auth()->attempt($this->getCredentialsFromFormData($data), $data['remember'] ?? false)) {
             $this->throwFailureValidationException();
@@ -155,5 +146,57 @@ class PasskeyLogin extends BaseAuth
         $this->dispatch('authenticate-attempt', data: (new WebauthnSerializerFactory(
             AttestationStatementSupportManager::create()
         ))->create()->serialize(data: $options, format: 'json'));
+    }
+
+    public function continue()
+    {
+        $data = $this->form->getState();
+
+        if (isset($data['email'])) {
+            $this->step++;
+            $this->email = $data['email'];
+        }
+    }
+
+    private function getSingleStepForm()
+    {
+        return [
+            TextInput::make('email')
+                ->label(__('filament-panels::pages/auth/login.form.email.label'))
+                ->email()
+                ->required()
+                ->autocomplete()
+                ->autofocus(),
+
+            TextInput::make('password')
+                ->label(__('filament-panels::pages/auth/login.form.password.label'))
+                ->hint(filament()->hasPasswordReset() ? new HtmlString(Blade::render('<x-filament::link :href="filament()->getRequestPasswordResetUrl()"> {{ __(\'filament-panels::pages/auth/login.actions.request_password_reset.label\') }}</x-filament::link>')) : null)
+                ->password()
+                ->revealable(filament()->arePasswordsRevealable())
+                ->autocomplete('current-password')
+                ->required(),
+        ];
+    }
+
+    private function getMultiStepForm()
+    {
+        return [
+            TextInput::make('email')
+                ->label(__('filament-panels::pages/auth/login.form.email.label'))
+                ->visible(fn() => $this->step === 1)
+                ->email()
+                ->required()
+                ->autocomplete()
+                ->autofocus(),
+
+            TextInput::make('password')
+                ->visible(fn() => $this->step == 2)
+                ->label(__('filament-panels::pages/auth/login.form.password.label'))
+                ->hint(filament()->hasPasswordReset() ? new HtmlString(Blade::render('<x-filament::link :href="filament()->getRequestPasswordResetUrl()"> {{ __(\'filament-panels::pages/auth/login.actions.request_password_reset.label\') }}</x-filament::link>')) : null)
+                ->password()
+                ->revealable(filament()->arePasswordsRevealable())
+                ->autocomplete('current-password')
+                ->required(),
+        ];
     }
 }
