@@ -11,6 +11,8 @@ return [
 
     'rp_id' => parse_url(env('APP_URL'), PHP_URL_HOST),
 
+    'successful_login_route' => '/',
+
     'register_options' => [
         'rp' => [
             'name' => env('APP_NAME'),

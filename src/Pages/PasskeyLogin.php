@@ -103,8 +103,8 @@ class PasskeyLogin extends BaseAuth
             return;
         }
 
-        if (config('matching_email')) {
-            if (config('multi_step') && $passkey->user->email !== $this->email) {
+        if (config('passkey-login.matching_email')) {
+            if (config('passkey-login.multi_step') && $passkey->user->email !== $this->email) {
                 Notification::make()
                     ->danger()
                     ->title('Passkey doesn\'t belongs to you')
@@ -115,7 +115,7 @@ class PasskeyLogin extends BaseAuth
 
             $data = $this->form->getState();
 
-            if (!config('multi_step') && $passkey->user->email !== $data['email']) {
+            if (!config('passkey-login.multi_step') && $passkey->user->email !== $data['email']) {
                 Notification::make()
                     ->danger()
                     ->title('Passkey doesn\'t belongs to you')
@@ -147,7 +147,7 @@ class PasskeyLogin extends BaseAuth
         Auth::loginUsingId($passkey->user_id);
         request()->session()->regenerate();
 
-        $this->redirectRoute('filament.employee.pages.account');
+        $this->redirect(config('passkey-login.successful_login_route'));
     }
 
     public function authenticateOptions()
