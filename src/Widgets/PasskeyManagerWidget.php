@@ -157,7 +157,7 @@ class PasskeyManagerWidget extends Widget implements HasForms, HasTable
         $options = new PublicKeyCredentialCreationOptions(
             rp: new PublicKeyCredentialRpEntity(
                 name: config('passkey-login.register_options.rp.name'),
-                id: config('passkey-login.register_options.rp.id')
+                id: config('passkey-login.rp_id')
             ),
             user: new PublicKeyCredentialUserEntity(
                 name: auth()->user()->{config('passkey-login.register_options.user.name')},

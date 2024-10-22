@@ -9,10 +9,11 @@ return [
 
     'open_on_page_load' => false,
 
+    'rp_id' => parse_url(env('APP_URL'), PHP_URL_HOST),
+
     'register_options' => [
         'rp' => [
             'name' => env('APP_NAME'),
-            'id' => parse_url(env('APP_URL'), PHP_URL_HOST)
         ],
         'user' => [
             'name' => 'email',
@@ -28,6 +29,5 @@ return [
 
     'authenticate_options' => [
         'challenge' => \Illuminate\Support\Str::random(),
-        'rp_id' => parse_url(env('APP_URL'), PHP_URL_HOST),
     ]
 ];
