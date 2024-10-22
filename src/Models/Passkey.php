@@ -21,6 +21,11 @@ class Passkey extends Model
         'data'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
+
     public function data(): Attribute
     {
         return Attribute::make(

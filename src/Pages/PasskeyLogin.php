@@ -103,7 +103,7 @@ class PasskeyLogin extends BaseAuth
             return;
         }
 
-        if ($passkey->user_id !== $this->email) {
+        if ($passkey->user->email !== $this->email) {
             Notification::make()
                 ->danger()
                 ->title('Passkey doesn\'t belongs to you')
