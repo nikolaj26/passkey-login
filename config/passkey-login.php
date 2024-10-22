@@ -18,7 +18,7 @@ return [
         'user' => [
             'name' => 'email',
             'id' => 'id',
-            'displayName' => 'first_name'
+            'displayName' => 'name'
         ],
         'challenge' => \Illuminate\Support\Str::random(),
         'authenticator_selection' => [
