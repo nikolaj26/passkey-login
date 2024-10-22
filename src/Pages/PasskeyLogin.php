@@ -103,13 +103,26 @@ class PasskeyLogin extends BaseAuth
             return;
         }
 
-        if ($passkey->user->email !== $this->email) {
-            Notification::make()
-                ->danger()
-                ->title('Passkey doesn\'t belongs to you')
-                ->send();
+        if (config('matching_email')) {
+            if (config('multi_step') && $passkey->user->email !== $this->email) {
+                Notification::make()
+                    ->danger()
+                    ->title('Passkey doesn\'t belongs to you')
+                    ->send();
 
-            return;
+                return;
+            }
+
+            $data = $this->form->getState();
+
+            if (!config('multi_step') && $passkey->user->email !== $data['email']) {
+                Notification::make()
+                    ->danger()
+                    ->title('Passkey doesn\'t belongs to you')
+                    ->send();
+
+                return;
+            }
         }
 
         try {
