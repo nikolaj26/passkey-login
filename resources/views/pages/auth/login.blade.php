@@ -20,23 +20,25 @@
 			</x-filament::button>
 		@endif
 
-		<div x-show="showPasskeyField" x-cloak class="flex flex-col items-center">
-			<div class="w-full flex items-center mb-6">
-				<div class="line"></div>
-				<div class="px-3">OR</div>
-				<div class="line"></div>
-			</div>
+		@if(!config('passkey-login.matching_email') || $step === 2)
+			<div x-show="showPasskeyField" x-cloak class="flex flex-col items-center">
+				<div class="w-full flex items-center mb-6">
+					<div class="line"></div>
+					<div class="px-3">OR</div>
+					<div class="line"></div>
+				</div>
 
-			<x-filament::button
-					class="w-full"
-					wire:click="authenticateOptions"
-					icon="heroicon-m-key"
-					color="gray"
-					icon-position="after"
-			>
-				Log In with Passkey
-			</x-filament::button>
-		</div>
+				<x-filament::button
+						class="w-full"
+						wire:click="authenticateOptions"
+						icon="heroicon-m-key"
+						color="gray"
+						icon-position="after"
+				>
+					Log In with Passkey
+				</x-filament::button>
+			</div>
+		@endif
 	</form>
 
 	{{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_AFTER, scopes: $this->getRenderHookScopes()) }}

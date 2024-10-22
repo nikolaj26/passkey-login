@@ -103,6 +103,15 @@ class PasskeyLogin extends BaseAuth
             return;
         }
 
+        if ($passkey->user_id !== $this->email) {
+            Notification::make()
+                ->danger()
+                ->title('Passkey doesn\'t belongs to you')
+                ->send();
+
+            return;
+        }
+
         try {
             $publicKeyCredentialSource = AuthenticatorAssertionResponseValidator::create($requestCSM)->check(
                 publicKeyCredentialSource: $passkey->data,
